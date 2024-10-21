@@ -12,7 +12,7 @@ Discover and interact with NPCs, voicemail, control systems, dead-drops. Collect
 Ultimately, I will wrap this and get it onto Android for the Play store.
 
 # Gameplay Synopsis
-How gameplay (should) work.
+How gameplay works. Theoretically.
 
 # Concepts 
 Key concepts needed to understand wtf is going on.
