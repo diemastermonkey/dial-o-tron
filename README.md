@@ -35,7 +35,7 @@ In Dial-O-Tron, the entire mathematical domain of possible inputs is much smalle
 
 A popular, computationally cheap algorithm will suffice as a "seedable" Random Number Generator. (link to the function)
 
-For each NPC (or other procedurally-generated entity), the 'phone number' is used as the seed. Instantiated with that seed at runtime, our custom 'non-random random number generator' produces the necessary 'illusion of consistent randomness'.
+For each NPC (or other procedurally-generated entity), the 'phone number' is used as the seed. Instantiated with that seed at runtime, our custom 'non-random random number generator' produces the necessary illusion of 'consistent diversity'.
 
 (to do: add code snippets and links to relevant sections)
 
