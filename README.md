@@ -29,7 +29,7 @@ But for Dial-O-Tron, we need an algorithm that produces *seemingly* random resul
 
 This, in a nutshell, is Procedural Generation on-the-cheap.
 
-This can be accomplished with many different algorithms, such as the Perlin Noise I use my unpublicized 'Entroscope' app for Android. In that, geolocation and clock data are inputs to generate game data on-the-fly, according to the results of a Perlin Noise function.
+This could be accomplished with many algorithms, such as the Perlin Noise I use my unpublicized 'Entroscope' app for Android. In that, geolocation and clock data are inputs to generate game data on-the-fly, according to the results of a Perlin Noise function.
 
 In Dial-O-Tron, the entire mathematical domain of possible inputs is much smaller: Only 'all possible local phone numbers', so 10^7 (10,000,000). Maybe that seems alot, but for an entire universe it's tiny. 
 
