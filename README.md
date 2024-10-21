@@ -23,7 +23,7 @@ How ProcGen is used
 ## Tokenization
 Tokens are in everything
 
-## Self-modifying runtime code 
+## Self-Modifying Runtime Code 
 So much self-tweaking code 
 
 # Gameplay Engine
