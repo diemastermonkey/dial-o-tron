@@ -1,0 +1,791 @@
+<html lang="en">
+<!-- DISPATCH FROM NIL! IF YOU ARE READING THIS, YOU ARE A CHEATER! -NIL0 -->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+	<title>Dial-O-Tron (Use with SIM approval only)</title>
+	<style>
+		body {
+			display: flex;
+			justify-content: flex-start;
+			height: 100vh;
+			background-color: #333333;
+			font-family: Arial, sans-serif;
+		}
+
+		#ui_device {
+			display: flex;
+		}
+
+		#ui_container {
+			width: 280px;
+			height: 320px;
+			background: linear-gradient(145deg, #a9a9a9, #c0c0c0);
+			border-radius: 20px;
+			padding: 20px;
+			display: grid;
+			grid-template-columns: repeat(4, 60px);
+			grid-gap: 15px;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+			border: 3px solid #333;
+		}
+
+		.ui_key {
+			width: 60px;
+			height: 60px;
+			background-color: #e0e0e0;
+			color: #333;
+			border-radius: 8px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 20px;
+			font-weight: bold;
+			cursor: pointer;
+			user-select: none;
+			box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.2);
+			transition: background 1.0s ease, box-shadow 1.0s ease;
+		}
+
+		.ui_key:active {
+			background-color: #d4d4d4;
+			box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+		}
+
+		/* Style for red keys (FO, F, I, P) */
+		.ui_key.red {
+			background-color: #d32f2f;
+			color: white;
+		}
+
+		.ui_key.red:active {
+			background-color: #b71c1c;
+		}
+
+		.ui_output_right	{
+			font-family: 'Press Start 2P', monospace;  /* Google font */
+			font-size: 1.0em;
+			background: linear-gradient(145deg, #a9a9a9, #c0c0c0);
+			border-radius: 20px;
+			padding: 20px;				
+			display: flex;
+			width: 280px;
+			height: 320px;
+			margin-left: 1em;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+			border: 3px solid #333;			
+			/* Broken? For text wrapping */
+			/* Modern alternative to word-wrap */						
+			/* overflow-wrap: break-word;*/ 			
+		}
+		
+		.ui_sim_master { 
+			font-family: 'Press Start 2P', monospace;  /* Google font */
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.89);			
+			color: white;
+			padding: 2%;
+			display: none;    /* Default invisible */
+		}
+
+	</style>
+	
+	<!-- Game Data -->
+	<script>
+		// Simple Static (?) tokens. Use as <token> in text AND code. 
+		// Never use a DIV! Take care with styling. Use <br />, not <br/>.
+		// Could be probably be recursive/self-modifying 
+		// Ex: Locating by key: if ("keyname" in dict) { ... }
+		// Ex: Writing to DOT screen: DOT.write(aTokens["BBSJUNGLE"])
+		// For example, in a responsescript: Execute contents of aTokens['PZMFIEND'] 
+		//   "Hello; {eval(aTokens['PZMFIEND']);}; Goodbye"
+		const aTokens = {
+			// NOT YET IMPLEMENTED
+			"BBSJUNGLE" : '<br />&#9617;&#9600;&#9600;&#9608;&#9617;&#9608;&#9617;&#9608;&#9617;&#9608;&#9600;&#9608;&#9617;&#9608;&#9600;&#9600;&#9617;&#9608;&#9617;&#9617;&#9617;&#9608;&#9600;&#9600;&#9617;&#9617;<br />&#9617;&#9617;&#9617;&#9608;&#9617;&#9608;&#9617;&#9608;&#9617;&#9608;&#9617;&#9608;&#9617;&#9608;&#9617;&#9608;&#9617;&#9608;&#9617;&#9617;&#9617;&#9608;&#9600;&#9600;&#9617;&#9617;<br />&#9617;&#9600;&#9600;&#9617;&#9617;&#9600;&#9600;&#9600;&#9617;&#9600;&#9617;&#9600;&#9617;&#9600;&#9600;&#9600;&#9617;&#9600;&#9600;&#9600;&#9617;&#9600;&#9600;&#9600;&#9617;&#9617;<br />&#9617;&#9608;&#9600;&#9604;&#9617;&#9608;&#9600;&#9604;&#9617;&#9608;&#9600;&#9600;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;<br />&#9617;&#9608;&#9600;&#9604;&#9617;&#9608;&#9600;&#9604;&#9617;&#9600;&#9600;&#9608;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;<br />&#9617;&#9600;&#9600;&#9617;&#9617;&#9600;&#9600;&#9617;&#9617;&#9600;&#9600;&#9600;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;',     // Remember commas!
+			// 'fi(e)nd' wardialer by pzm. Entirely one code block.
+			// * Note: Handling code blocks isn't in fnInterpolate yet!
+			'PZMFIEND' : '{sPre=DOT.last.substr(0,3); iCurrentNPC = sPre + "" + Math.floor(Math.random()*9999); DOT.write(null); DOT.write("fi(e)nd v9 by pzm<br/><br/> -> "); DOT.write(iCurrentNPC.slice(0, 3) + "-" + iCurrentNPC.slice(3) + "<br/>"); fnNPCInteraction(iCurrentNPC);}',
+			//
+			"NOTUSEDYET1" : 'another example',
+			"NOTUSEDYET2" : 'another example'
+		};
+	
+		// NPC Response Script Templates	
+		// ----------------------------------------------------------------			
+		// Each field is delimited by semicolon.
+		// *IMPORTANT!* Adding/removing/moving list entries *WILL* change the ENTIRE universe!
+		// You *MUST* recalculate key story clues/contacts/rabbit holes EVERY time. Test, too!
+		// To do: Pauses should be simulated where ... are found. Also tokens. And commands.
+		//
+		// Implied format: 
+		//   Initial response(s); Multiple responses; hangup message(s) (last only)
+		// <NOTHING>/other disused tokens are workarounds for old code: Fix them.
+		//
+		// Important: Initial, mid, or end responses can be empty - or just code!
+		// Important: Responses can include commands, inside {code} brackets!
+		// Example: 
+		// "in text{console.log(10, 'console.log(3)')}; mid text{DOT.locked=1}; bye!"
+		// WILD hack to use tokenized code directly. Insert in response text.
+		// Executes entire contents of aTokens['PZMFIEND'] !
+		//   {eval(aTokens['PZMFIEND']);}
+		// ----------------------------------------------------------------			
+		const aResponseScripts = [  
+		  // One of NIL0's messy drops w/clues
+			"[4 weird tones]<br/><br/>PWNED BY NIL0; 121-1001 BBS; 1?0-1211 NIL; 10?-1211 NIL; <br/>Integritas Retis!",
+			// SIM self-check: Spells "SIM"			
+			"[single beep]<br/>[odd clicking]<br/>; 01010011 01001001 01001101;<br/> unit compliant",
+			// Crank call victim
+			"You again?; Why??; I can hear you breathing, you know.; It's time to stop! It's time to stop!; Where are your parents?!; I'm calling the SIM!; Goodbye!", 
+			// Sad Stories
+			"Hello George?; Are you there?; Oh nevermind.; You're not George, are you?; Wrong number.; George, is that you dear?; [sigh]",
+			// Automated bot loads pzm's 'fi(e)nd' wardialer to DOT.targetkey
+			// User must set target key and upload source first! 
+			// MUST check 'undefined' for dynamic properties!
+			// Note use of temp var to store message for 'goodbye', then used as a <token> and cleared 
+			"[a kazoo??]; {if (DOT.targetkey !== undefined && DOT.source !== undefined && DOT.last.slice(3,7) == DOT.source) msg='Downloading:<br/>fi(e)nd v2<br/>Hook installed!<br/>HOOK CODE HERE'; else msg='Your unit is not configured for download';} ; <msg>{console.log(msg); msg='';}",
+			// Spammer
+			"Oh good, you called back...; Don't hang up yet!; Let me tell you about our financing plans!; Wait, don't go!; Dangit!",
+			// Resistance clues 
+			"You found us. Good.; Don't speak, just listen.;<br/>Beware SIM, they're everywhere.;<br/>We are NIL!",
+			// 
+			"Is that you?<br/>; Not safe right now...; Keys exist<br/>Find them.; Docs exist<br/>Find them.; Try NIL.; 100-121?; I've said too much, I must go.;<br/>Call back.",
+			// Pranksters
+			"Uh...<br/>; Hehehe...; For a good time 566-1337; Hahaha...; Dave's not here, man; [bass-heavy music]; [rock music]; [opera?!]; [heavy coughing]; [bong rips]; [bong rips]; <br/>Later, man...",
+			// Later, a BBS
+			"{DOT.write(aTokens['BBSJUNGLE'])};{console.log('no middle text');} ;[modem timeout]",
+			// Rabbit holes
+			"[3 beeps]; 5??-?332; ?5?-2?32; ?55-23?2; ?55-2??2;<br/>NIL",	 		// Clue techniques
+			// NIL0 pwns at start with same tones. Points to a SIM VM and NIL Dispatch #1
+			"[4 weird tones]<br/>; 111-2222 SIM; 11?-5432 FLX; aHR0cHM6Ly9w<br/>YXN0ZWJpbi5j<br/>b20vcmF3L2FO<br/>dGZlY2dGCg==;<br/>PWNED BY NIL0",
+			// Clear -> Pastebin -> NIL Manifesto! Carefully formatted!
+			"[4 weird tones]<br/>; [beeping pattern]; 7?7-7777 FLX; pastebin.com /raw/sudbDdHF;<br/>PWNED BY NIL0", 
+			// Corporate voicemail
+			"Welcome to Axis Voicemail; Enter mailbox #; Incorrect<br/> Goodbye",
+			// A hackable SIM login terminal w/defenses
+			// Sets a DOT event to brick unit in N mins! Go, user - find a circumvention! :P
+			// To do: Doesn't inform user timer challenge failed. Implement locking/inform user.
+			// BEWARE empty final field! Fix handler. 
+			"SIM VM 3.7{DOT.heat += 1;}; Install key; No key detected<br/>Incident logged; DOM hacking suspected! Prefix locked pending TOE review. Remain seated. Review time ~ 3m. DO NOT circumvent review process!{DOT.locked=true; DOT.setEvent('DOT.bricked=true;DOT.setBricked();',180);} ; ",  // 180s = 3m
+			// Breather :P 
+			"[breathing]; [panting]; [moaning]; [mumbling]; [squeeking?]; Oh yeah...; Ooh...; Aah...; Heh heh heh [cough]",
+			// FLOX: A functional hacker bot: Unlocks active DOT locks, clears pending timers 
+			// To do: Actually check status of flags/clear only SIM timer (not all)
+			// Example use of tokens in code as well. Note the greet/goodbye fields open/close fancy display. 
+			"/--- flox v2 ---;:Locks: <DOT.locked><br/>:Heat : <DOT.heat><br/>:Fuzzing...bof!<br/> :Locks cleared.{DOT.locked=false;DOT.setEvent(null);console.log(<iCurrentNPC>);};:<br/>: 'f*** locks'<br/>\\____ -pzm ____", 
+			// ^-- DEBUG --v
+			// "[3 chirps]<br/>;flox v2 <br/> :Locks: <DOT.locked><br/> :Fuz...bof!<br/> :Lock cleared.<br/>{DOT.locked=false;DOT.setEvent(null);console.log(<iCurrentNPC>);}; <NOTHING>",
+
+			// The famed Jeffe's Pizza. Beware empty last field.
+			"Jeffe's pizza!; Watchou want? Hello??; We got pizza!; No new orders, call back!; OMG PIZZA FIRE CALL HELP!; " 
+			// "Nimo's Circuit Shop is closed for remodeling.; Nimo's has the bytes you want!; Nimo's is closed, try later."
+			// (...)
+			// Ad-Supported Services - Watch "LookAt.me" or play "VR Consumer" 
+			// to decrease DOT.heat: 
+			//    (..something something...) {DOT.heat -= 1}
+			//
+		];		 	
+	</script>
+
+	<!-- DOT device code -->
+	<script>
+		// DOT (device) code
+		// ================================================================
+		
+		// Class: DOT Object
+		// The DOT is treated as an actual device with stateful OS and functions
+		// Game events which affect the DOT should interact directly with this object
+		// Events also use it as a whiteboard, and can add/read/modify properties
+		// It runs timers for DOT events, which can be triggered by response scripts/etc
+		// Note: Using ES6-style class syntax - gad
+		// ----------------------------------------------------------------		
+		class DOT_Type {         	 							    // Arg: Disused (?) own number
+		
+			// Constructor
+			constructor (argNumber) { 
+				this.prng = new PRNG(argNumber);			  // In case we need to Procgen
+				this.number = argNumber;		  	        // For display only
+				this.offset = this.prng.randInt(20);    // For procgen event clock if needed
+				this.factor = this.prng.rand() * 6 - 3; // For clock
+				// Actual random properties
+				// this.pickup = Math.floor(Math.random() * 64);
+				// Common properties
+				this.heat = 0;									    		// Citations. If > X, GTA warrant! Hacker term.
+				this.locked = false;                    // If true, SIM locked! Mb timestamp?
+				this.bricked = false;                   // If true, bricked + active DOM warrant!
+				this.timer = null;                      // Timer handle, if active
+				this.last = "5551212";                  // Last completed call to...
+				this.screenElement = "";	 							// ID of screen DIV, set it on create!
+				this.simElement = null;                 // SIM-controlled element, ex: ui_sim_master
+				this.buffer = "";                       // Used to hack-together programs, more
+				// 'Hooks' are mostly invisible triggers, modified dynamically
+				// Ex: 'A00' is a system cmd to clear 'cmd buffer' (this.buffer)
+				// Thus scripts can add to/clear all other hooks by calling A00
+				// TO DO: Move to some inline data somewhere, parse on init
+				this.hooks = {
+					'A00':'{console.log("DOT: A00 Buffer cleared"); DOT.buffer="";}',
+					'A06':'{console.log("DOT: A06 Target F"); DOT.targetkey="F";}',
+					'A07':'{console.log("DOT: A07 Target I"); DOT.targetkey="I";}',
+					'A10':'{console.log("DOT: A10 Target *"); DOT.targetkey="*";}',
+					'A12':'{console.log("DOT: A12 Target #"); DOT.targetkey="#";}',
+					'A18':'{console.log("DOT: A18 Clear target"); DOT.targetkey="";}',
+					// Don't work yet: 
+					'A22':'{console.log("DOT: A22 Execute buffer"); eval(DOT.buffer);}',
+					'A33':'{console.log("DOT: A33 Hook buffer"); eval(DOT.buffer);}',
+					'A88':'{console.log("DOT: A88 Dump buffer"); console.log(DOT.buffer);}',
+					'A99':'{console.log("DOT: A99 Reset DOT"); console.log("RESET");}'
+					// 
+				};
+				// New, associative array multiple timers?
+				// this.timers = {[null]:[null]};				// timers[1112222] would -> (timer handle)
+			}                                         // End constructor
+			
+			// Function: Return own clock-based wave value (optional salt)
+			// ! With a time offset arg, can be a time machine !
+			getWave (argSalt) {			 									 // Use salt for multiple waves			
+				return (
+					this.factor * 
+					Math.sin(
+						Math.floor (Date.now() / 1000) + this.offset
+					)
+				);																			 // End return statement
+			};																				 // End function
+			
+			// Function: Launch a one-shot timer to run (arg) code as eval
+			// Expects SECONDS as argument (it gets *= 1000)!
+			// Pass null to cancel any pending timer 
+			setEvent (argCode, argTime = 0) {					// Default to immediately
+				// To cancel timer
+				if (argCode == null) { 									
+					if (this.timer != null) { 						// Redundatnt?
+						clearTimeout(this.timer);
+						this.timer = null;
+						console.log ("DOT event timer cleared");
+					}
+					return;																// Done here
+				}
+				
+				// Launch timer w/local property so others can check
+				console.log ("DOT timer set for " + argTime + "s for " + argCode);
+				this.timer = setTimeout (
+					// When time, run code and unset timer var
+					function() {
+						eval (argCode);
+						DOT.setEvent(null);                 // Side-recurse to clear timer
+					},
+					argTime * 1000                        // ...after X sec 
+				);																			// End setTimeout				
+			};																				// End function
+			
+			// Function: Very simple outputter - later, w/throttle etc
+			// Call with null to clear output area 
+			// Writes to output area to be set at instantiation!
+			write (argOut) { 
+				if (argOut == null) { 		// Clear command
+					document.getElementById(this.screenElement).innerHTML = "";
+					return;
+				}
+			
+				// Just append to write
+				document.getElementById(this.screenElement).innerHTML 
+					+=	argOut;
+			}																					// End function
+			
+			// Function: SIM calls this to disable ("brick") a unit. Convenient.
+			setBricked () { 
+				if (this.simElement == null) { 
+					console.log ("DOT: Firmware error, SIM layer undefined!"); // obscure
+					return (false);
+				}
+				// For now simply set visible - it should be 'on top' of entire page 
+				document.getElementById(this.simElement).style.display = "block";
+				return (true);													// To caller: was bricked
+			}																					// End func					
+		}               												 	  // End DOT_Type
+		
+		// DTMF Dialer code
+		// ================================================================
+		
+		// DTMF frequencies as associative array of key->freq_a,freq_b
+		// ---------------------------------------------------------		
+		const GToneDurationMS = 150; 		// Tone duration (ms) as per Wikipedia
+		const dtmfFrequencies = {
+			'1': [697, 1209], '2': [697, 1336], '3': [697, 1477],			
+			'4': [770, 1209], '5': [770, 1336], '6': [770, 1477],
+			'7': [852, 1209], '8': [852, 1336], '9': [852, 1477],			
+			'*': [941, 1209], '0': [941, 1336], '#': [941, 1477],
+			'A': [697, 1633], // FO Key
+			'B': [770, 1633], // F Key
+			'C': [852, 1633], // I Key
+			'D': [941, 1633]  // P Key
+		};
+
+		// Function: Create AudioContext (or webkitAudioContext, depending)
+		// ---------------------------------------------------------
+		function fnCreateAudioContext () {
+			console.log ("DOT: Audio initialized");
+			return (
+				new (window.AudioContext || window.webkitAudioContext)()
+			);
+		}
+
+		// Function: Play a DTMF tone for arg key
+		// ---------------------------------------------------------
+		function fnPlayDTMF (sArgKey) {		
+			// Init audio context only if necessary
+			GAudioContext = GAudioContext || fnCreateAudioContext();
+			const iCurrentTime = GAudioContext.currentTime;
+			const aFrequencies = dtmfFrequencies[sArgKey];
+			// Audio context clock time is milliseconds
+			const iStopClockTime = iCurrentTime + GToneDurationMS / 1000;						
+			// Define both tones
+			const tone1 = fnGenerateTone(aFrequencies[0], GAudioContext);
+			const tone2 = fnGenerateTone(aFrequencies[1], GAudioContext);
+			// Start both tones
+			tone1.start(iCurrentTime); 
+			tone2.start(iCurrentTime);
+			// Stop both after duration
+			tone1.stop(iStopClockTime);
+			tone2.stop(iStopClockTime);
+		}																	// End func
+
+		// Function: Generate a DTMF oscillator and return as object
+		// ---------------------------------------------------------
+		function fnGenerateTone (frequency, audioContext) {
+			const oscillator = audioContext.createOscillator();
+			const gainNode = audioContext.createGain();
+			oscillator.type = 'sine';
+			// Set frequency and volumne
+			oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+			gainNode.gain.setValueAtTime (0.13, audioContext.currentTime); // Hardwired
+			// Connect oscillator to gain, to destination
+			oscillator.connect(gainNode);
+			gainNode.connect(audioContext.destination);
+			return(oscillator);
+		}																	// End func
+
+		// NPC Code
+		// ================================================================
+		
+		// Class: NPC - Non-Player "Character"
+		// This can be a person, OR it can be a device, system glitch, etc 
+		// For now, argSeed is the NPC's phone number, but could differ
+		// HARDWIRED with N% chance of even existing (see this.exists)
+		// ----------------------------------------------------------------	
+		function NPC_Type (argSeed) { 	         				 
+			this.prng = new PRNG(argSeed);					 	// Seed is just phone number
+			this.number = argSeed;					         	// For display only
+			this.exists = this.prng.randInt(2) === 0 ? 1 : 0;  // If 1-in-N, true, else false
+			this.offset = this.prng.randInt(20);     	// Ex: procgen int for clock wave offset
+			this.factor = this.prng.rand() * 6 - 3;  	// Ex: procgen float for clock wave factor
+			this.script = this.prng.randInt(64);     	// Modulu len(scripts), use as script number
+			// Actual (random) random properties - ie NPC random behavior
+			// Modulo the value with the number of choices 
+			// Modulu len(responses in script-1)+1 = response index, as 0th is greeting, last is hangup
+			this.response = Math.floor(Math.random() * 64);
+ 
+			// Return own clock-based wave value (optional salt)
+			// ! With a time offset arg, could be a time machine !
+			this.getWave = function (argSalt) {			// Salt if multiple waves
+				return (
+					Math.sin(Math.floor (Date.now() / 1000) + this.offset) * this.factor
+				);					// End return statement
+			};					// End getWave anon func
+		};              																	// End NPC object		
+
+		// Simply returns a response script as an array, for rand/PRNG etc
+		// Ultimately should replace tokens too
+		// ---------------------------------------------------------
+		function fnResponseArray (argScriptsArray) {
+			// OG: No support for commands with ; in them 
+			// 	return argScriptsArray.split(';'); 
+			// New fancy regex CAN miss some edge cases
+			// Beware of dangling or lonely braces
+			return (argScriptsArray.split(/;(?![^{}]*\})/));
+		}  
+		
+		// Function: Returns a Seedable PRNG object
+		// ---------------------------------------------------------	
+		function PRNG (argSeed) {
+			this.state = argSeed || 1;
+			this.rand = function() {						// Just like Math.random()
+				var x = Math.sin(this.state++) * 10000;
+				return (x - Math.floor(x));
+			};
+			this.randInt = function (argMax) {	// Convnient return 0 to argMax
+				return (Math.floor(this.rand() * argMax));
+			};
+			this.seed = function(newSeed) {			// Set seed
+				this.state = newSeed || 1;
+			};
+		};				// End PRNG
+		
+	</script>	
+	
+</head>
+<body onReady="fnMain()">	 
+	<!-- Mainline and most game code -->
+	<script>
+		// Globals
+		var GAudioEnabled = true;		 
+		var GAudioContext = null;         // Single glob audio object
+		var sUnicodeMute  = "&#x1F507;";  // Speaker w/crossout
+		var sUnicodeSound = "&#x1F50A;";  // Speaker w/sound waves "on"
+		var sSystemName = "Dial-O-Tron 0.26<br/>";   // When no output
+		var sDialBuffer = "";             // Holds number as dialed
+		var iCurrentNPC = 0;              // Dev use only
+		var sPlayerNumber = "5551212";    // Disused but could be fun? Seed?
+		var sHangup = "[disconnected]";	
+		var DOT = new DOT_Type(sPlayerNumber);  		// As arg, becomes a world seed
+		DOT.screenElement = "ui_output_right";  		// To do: Make constructor arg?
+		DOT.simElement = "ui_sim_master";						// UI that SIM controls
+				
+		// Run main when ready
+		// ---------------------------------------------------------
+		window.onload = function() {
+  		fnMain();
+		};
+ 
+		// Mainline
+		// ---------------------------------------------------------
+		function fnMain() {  
+			console.log ("Unit initialized: " + sSystemName);
+			fnInitUIHandlers(); 
+			// Resize window (only for CodePen)
+			var contentHeight = document.documentElement.scrollHeight;
+      var contentWidth = document.documentElement.scrollWidth;
+      // Resize window to fit content
+      window.resizeTo(contentWidth, contentHeight);
+		} 
+		
+	  // Function: Init all UI handlers
+		// Note: Doesn't handle DOT keypad (but does keyboard entry)
+		// ---------------------------------------------------------
+		function fnInitUIHandlers () {
+			// Init any UI dressing (removed for CodePen's preview)
+			// document.getElementById('ui_output_right').innerHTML = sSystemName;
+			console.log ("DOT: Initializing interface hooks");			
+			
+			// UNIMPLEMENTED: Handler for toggleable audio
+			document.getElementById("toggleAudio").addEventListener("click", function () {
+				GAudioEnabled = !GAudioEnabled;
+				// INSERT CODE: ROTATE AUDIO VOLUME (Low, med, high)
+				console.log ("Audio (not actually) toggled");
+			});
+
+			// Handler for number key dialing
+			document.addEventListener (
+				"keydown", function(event) {		// Anon func triggered on event
+					// Handle numeric keys only i.e. keypad entry
+					// Note it is always only a single char.
+					if (Number.isInteger(parseInt(event.key))) { 
+						console.log ("Dialed via keyboard: " + event.key);
+						fnUIHandle(event.key); 			// Explicit dial
+						return;               			// Key handled, shunt out
+					}
+					// 
+					// INSERT CODE: Handle other keystrokes
+					//
+				}																// End inline function 
+			);    	                          // End addEventListener
+		}																		// End fnInitUIHandlers	
+		
+		// Function: Handle all UI 'button' presses
+		// FIX NEEDED: Most of this belongs in fnGameplayHandle!
+		// ---------------------------------------------------------
+		function fnUIHandle (argEvent) { 						
+			// Special case if called from HTML/keyboard/code
+			if (argEvent instanceof HTMLElement) {
+				sEvent = argEvent.id;				// If called by event
+			} else { 				
+				sEvent = argEvent;					// If called by code
+			}
+			
+			// INSERT CODE: Exit if not dialer cmd (if other UI cmd)
+			
+			// Special case: If first dialed number, restart output
+			if (sDialBuffer.length == 0) {
+			  document.getElementById('ui_output_right').innerHTML = 
+					sSystemName + "<br/>";	      // For dialing to follow
+			}
+			
+			// Handle 'hooks' - mostly invisible events that occur
+			// when sequence of keys is entered (but dialing continues)
+			if (sDialBuffer in DOT.hooks) { 
+				//
+				// INSERT CODE: Interpolate hooked code before execute!
+				//
+				eval(DOT.hooks[sDialBuffer]);
+			}
+			
+			// If 3rd entry, inject '-' in output for 'phone format'
+			if (sDialBuffer.length == 3) {
+			  document.getElementById('ui_output_right').innerHTML += "-";
+			}
+			
+			// Handle tones, accumulator, and triggering NPC
+			fnPlayDTMF(sEvent);								// Sound first
+			sDialBuffer += sEvent; 
+			DOT.write(sEvent);	              // Append numbers
+			
+			// When 7 digits dialed, handle attempt to place call
+			if (sDialBuffer.length == 7) {    // i.e. 555-1212 				
+				// INSERT CODE: Call a proper DOT dialer routine 
+				// that also checks for locks/sanity/etc 
+				// For now, a few hardwired conditions
+				if (/\D/.test(sDialBuffer)) {		// If ANY non-numeric
+					DOT.write(
+						"<br/><br/>[loud beep]"
+						+ "<br/><br/>Error:<br/>Invalid number"
+						+ "<br/><br/>[disconnected]"
+					);
+					sDialBuffer = "";             // Clear dial buffer
+					return (-1);									// If function caller interested
+				}
+				
+				// If DOT locked, error IF not same prefix as last completed call
+				// Also should be part of DOT dialer method 
+				if (DOT.locked == true) { 
+					var sPrefix = DOT.last.substring(0, 3);
+					if (sDialBuffer.substring(0, 3) !== sPrefix) { 
+						DOT.write(
+							"<br/><br/>[loud beep]<br/><br/>Error:"
+							+ "<br/><br/>Unit locked to prefix " + sPrefix + "."
+							+ "<br/><br/>TOE review in progress."
+							+ "<br/><br/>[disconnected]"
+						);						
+						sDialBuffer = "";
+						return (-1);
+					}
+				}
+
+				// If still here, call *is* being placed
+				DOT.last = sDialBuffer;					// Store for redial etc
+
+				iCurrentNPC = sDialBuffer;      // Seed for NPC	
+				sDialBuffer = "";               // Clear
+				DOT.write("<br/><br/>[ringing]"); 
+				// Handle NPC event or update UI if none
+				fnNPCInteraction (iCurrentNPC);				
+			}			
+		} 																	// End fnUIHandle
+
+		// Function: Handle game events
+		// ---------------------------------------------------------
+		//  argNPC may be null
+		function fnGameplayHandle (argNPC) {
+			//	TO DO: Move gameplay sh* from fnUIHandle/fnNPCInteraction here
+			//  fnNPCInteraction should run only when sure the NPC exists		
+		}
+		
+		// Function: Handle NPC event (if they even exists)
+		// ---------------------------------------------------------
+		function fnNPCInteraction (argNPC) { 
+			// Sanitize arg in case it's "555-1212", or int 
+			sTemp =  String(argNPC.replace(/-/g, ''));
+		
+			// Generate NPC for this phone number
+			// OG // var NPC = new NPC_Type (iCurrentNPC);	
+			var NPC = new NPC_Type (sTemp);	
+			
+			// If NPC doesn't exist, end interaction 
+			if (! NPC.exists) {
+				console.log ("NPC nonexistent. Skipping interaction.");
+				document.getElementById('ui_output_right').innerHTML += 
+				  "<br/>[no answer]";				
+				return (-1);
+			}
+
+			//
+			// INSERT CODE: Is awake? Check schedule or ditch
+			//
+			
+			// The NPC's PRNG selects which script and which responses from script
+			// Thus script always same for NPC but response order can differ
+			var iScriptNum = NPC.script % aResponseScripts.length; 			  	// Which script
+			var aResponses = fnResponseArray(aResponseScripts[iScriptNum]); // Respones in script
+			// Primary response excludes 0th (greet), last (goodbye) from random selection
+			var iPrimaryResponse = NPC.response % (aResponses.length - 2) + 1;
+			// Selected scripts for each phase of interaction, including code
+			var sGreetingScript = aResponses[0]; 
+			var sResponseScript = aResponses[iPrimaryResponse];			  			// See above
+			var sGoodbyeScript  = aResponses[aResponses.length - 1];
+			
+			// Perform greet, response, bye script
+			DOT.write("<br/>[connected]<br/>");			
+			
+			// Iterate scripts (note the BASH-style for)
+			for (var sScript of [sGreetingScript, sResponseScript, sGoodbyeScript]) {
+				console.log ("DOT: " + sScript);
+				sScript = fnInterpolate(sScript); 		// Does all text + commands
+				var sText = fnResponseOnly (sScript);	
+				var sCommand = fnCommandsOnly (sScript);
+				DOT.write ("<br/>" + sText);					// Write to screen
+				if (sCommand.length) { 								// Don't bother if no command
+					fnCommandHandle(sCommand);
+				}
+			}			
+			// NPC ends interaction
+			DOT.write("<br/><br/>" + sHangup);
+		}
+
+		// Function: Interpolate/otherwise pre-process single response (or ?)
+		// Interpolates *entire* response string, including commands
+		// Call before any other operations on response OR command
+		// Recurses if interpolations contain tokens, returns final version
+		// NOTE: Tokens may contain ONLY letters/periods: xyz, xyz.z 
+		// ---------------------------------------------------------		
+		function fnInterpolate (argString) {
+			if (!argString.match(/<[\w.]+>/g)) {		// If no tokens, reflect args
+				// ("fnInterplate: No tokens found");
+				return (argString);										// Done here
+			}
+			
+			// So tokens (or HTML?!) exist: Get all tokens as list (sans <>)
+			var sOutString = argString;
+			const aTokens = sOutString.match(/<[\w.]+>/g);	
+			
+			// Interpolate each token found 
+			for (var sToken of aTokens) {
+				// Discard brackets <> 
+				sToken = sToken.replace (/[<>]/g, '');
+			
+				// Replace any <token> if a variable exists! Cheap but sleazy.				
+				// Weird fancy regex because don't want '<' in tokens
+				// Note: Non-tokens MUST be left or embedded HTML may be broken!				
+				if (fnIsToken (sToken)) {							// Clever function true if valid
+					sOutString = 
+						sOutString.replace (new RegExp (`<${sToken}>`, 'g'), eval(sToken));
+				} else { 
+					console.log ("fnInterpolate: Leaving non-interpolated token " + sToken);
+				}
+				
+				//
+				// INSERT CODE: Next, check explicit tokens 'aTokens'
+				// Select as per Procgen
+				//
+			
+			} // End foreach
+			
+			// console.log ("fnInterpolate returning: " + sOutString);			
+			return (sOutString);
+		}
+		
+		// Function: Simply return response with commands stripped
+		function fnResponseOnly (argResponseString) { 
+ 			return (argResponseString.replace(/{[^}]*}/g, ''));			
+		}
+
+		// Function: Simply return only the commands from a response string
+		// If no match, returns nothing
+		function fnCommandsOnly (argResponseString) { 
+			return (
+				argResponseString.substring (
+					argResponseString.indexOf('{') + 1, argResponseString.lastIndexOf('}')
+				)
+			);
+		}
+				
+		// Function: Parse-out any commands from (arg) script response 
+		// dialog, and execute them. Make sure to have already delivered
+		// the text response before you do this. 
+		// New: Expects only "{...code...}" as arg, see fnCommandsOnly 
+		// ---------------------------------------------------------		
+		function fnCommandHandle (argResponseString) {
+			// console.log ("fnCommandHandle: Recieved " + argResponseString);			
+			var sCommand = argResponseString;  // Clean this up 			
+			// If no command found, done here (shouldn't happen really)
+			if (! sCommand.length) {  
+				return;
+			}
+			
+			// ** INSERT CODE: Interpolate tokens **
+			
+			//	Eval
+			console.log ("DOT: SIM trig " + sCommand);			
+			eval(sCommand);
+  		return (sCommand);		// If desired by caller
+		}
+		
+		// Function: Simply returns true if arg is a token 
+		// 'Is a token' means is an existing variable OR 
+		// is in global tokens dictionary (code pending)
+		// Beware tricky code: Testing a variable *named* in a variable
+		function fnIsToken (sArgToken) {
+			if (typeof window[sArgToken] !== 'undefined') {
+				console.log ("fnIsToken: confirmed token " + sArgToken);
+				// console.log(typeof window[sArgToken], window[sArgToken]);
+				return (true);
+			}
+
+			// Thing is, are dynamic properties in in 'window'? This catches those:
+			if ((eval(sArgToken)) !== 'string') { 
+				console.log ("fnIsToken: confirmed token " + sArgToken);
+				return (true);
+			}
+			
+			return (false);
+		}
+	</script>	
+	
+	<!-- Dialer interface -->
+	<div id="ui_device">
+		<div id="ui_container">
+				<!-- Keypad Buttons -->
+				<div id="1" class="ui_key" onclick="fnUIHandle(this)">1</div>
+				<div id="2" class="ui_key" onclick="fnUIHandle(this)">2</div>
+				<div id="3" class="ui_key" onclick="fnUIHandle(this)">3</div>
+			  <!-- AKA 'A' -->
+				<div id="A" class="ui_key red" onclick="fnUIHandle(this)">FO</div> 
+				<div id="4" class="ui_key" onclick="fnUIHandle(this)">4</div>			
+				<div id="5" class="ui_key" onclick="fnUIHandle(this)">5</div>
+				<div id="6" class="ui_key" onclick="fnUIHandle(this)">6</div>
+			  <!-- AKA 'B' -->
+				<div id="B" class="ui_key red" onclick="fnUIHandle(this)">F</div> 
+				<div id="7" class="ui_key" onclick="fnUIHandle(this)">7</div>
+				<div id="8" class="ui_key" onclick="fnUIHandle(this)">8</div>
+				<div id="9" class="ui_key" onclick="fnUIHandle(this)">9</div>
+			  <!-- AKA 'C' -->
+				<div id="C" class="ui_key red" onclick="fnUIHandle(this)">I</div> 
+				<div id="*" class="ui_key" onclick="fnUIHandle(this)">*</div>
+				<div id="0" class="ui_key" onclick="fnUIHandle(this)">0</div>
+				<div id="#" class="ui_key" onclick="fnUIHandle(this)">#</div>
+			  <!-- AKA 'D' (retired) 
+					<div id="D" class="ui_key red" onclick="fnUIHandle(this)">P</div> 
+				-->
+				<div id="toggleAudio" class="ui_key">&#x1F50A;</div>
+		</div>
+	</div>
+
+	<!-- Output area to right of pad -->
+	<div id="ui_output_right" class="ui_output_right">
+		<div id="ui_out_dialog">
+			Dial-O-Tron 0.26<br/><br/>
+			Welcome, citizen! <br/><br/>
+			Access a world of free services, no strings attached! <br/><br/>			
+			DOT is safe, secure, fun! *  <br/>
+			<br/><br/>
+			* Signals Intelligence Ministry license number 32-329-96
+		</div>
+	</div>		
+ 
+  <!-- SIM master control -->
+	<div id="ui_sim_master" class="ui_sim_master">** SIM SYSTEM INTERRUPT **<br/><br/>The TOE has found you guilty of:<br/>UNMONETIZED CONTENT<br/><br/>This unit is disabled.<br/><br/>Remain seated and await DOM intervention personnel for transport to complimentary Consumer Rehabilitation.<br/><br/>Thank you for using Dial-O-Tron!<br/>Have a nice day.
+	<br/><br/>
+	<!--
+		Dial-O-Tron Statistics<br/><br/>
+		DOT Active Time: 1h 32m 3s <br/>
+		Calls placed: 17 <br/>
+		Systems discovered: 3 <br/>
+		Systems accessed: 0 <br/>
+		DOM citations: 1 <br/>
+		DOT heat max: 6 <br/>
+		NIL contacts: 3 <br/>
+		Score: 0 <br/>	
+	-->
+	</div>
+</body>
+</html>
