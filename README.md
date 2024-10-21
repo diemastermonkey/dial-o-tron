@@ -3,7 +3,7 @@ A nostalgic, procedurally-generated hacker adventure played 7 digits at a time.
 
 Try it at [my CodePen!](https://codepen.io/Unhacker/full/VwowxWL)
 
-Disclaimer: I know *nothing* about game design. I made this because I enjoy writing weird code.
+Disclaimer: I know *nothing* about game design; I made this because I enjoy writing weird code.
 
 This repository mostly exists to document how it works, before I forget.
 
@@ -14,7 +14,8 @@ It's like [Doors](https://github.com/diemastermonkey/doors), but instead of a ma
 Ultimately, I will wrap this and get it onto Android for the Play store.
 
 # Gameplay Synopsis
-How gameplay works. Theoretically.
+How gameplay works. Theoretically. 
+If you're really more curious about the game aspect, check out 'Lore', below.
 
 # Concepts 
 (Key concepts needed to understand wtf is going on.)
@@ -71,5 +72,8 @@ code that sets variables that code in the 'middle' or 'goodbye' responses
 can reference. This sometimes used to change how a response script behaves 
 depending on a check or function performed earlier in the script.
 
-
+# Lore
+You can tell I'm not a gamer because this is last. However, I *am* an artist - so 
+you may be surprised by how much story and lore I have baked-in, and how elaborate 
+some of it is. (discuss the premise, game world, and lore here).
 
