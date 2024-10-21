@@ -7,7 +7,7 @@ Disclaimer: I know *nothing* about game design; I made this because I enjoy writ
 
 This repository exists to document how it works before I forget. Code here may lag behind [CodePen](https://codepen.io/Unhacker/full/VwowxWL).
 
-# Excerpt from 'Projects' entry: 
+# Excerpt from 'Projects' entry
 
 It's like [Doors](https://github.com/diemastermonkey/doors), but instead of a maze it's a local area code full of phone numbers. The user interface is (some sort of) phone, with DTMF dialing and old-school phreaking stuff. Discover and interact with NPCs, voicemail, control systems, dead-drops. Collect clues, solve puzzles, acquire mods, gain access - retake the network for the people! Since you've come this far, you can peek at one of its [secret artifacts!](https://pastebin.com/raw/sudbDdHF)
 
