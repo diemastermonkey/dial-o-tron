@@ -12,6 +12,8 @@ It's like [Doors](https://github.com/diemastermonkey/doors), but instead of a ma
 Ultimately, I will wrap this and get it onto Android for the Play store.
 
 # Gameplay Synopsis
+Disclaimer: I know *nothing* about game design. I made this because I enjoy writing weird code.
+
 How gameplay works. Theoretically.
 
 # Concepts 
@@ -21,26 +23,28 @@ Everything starts when a user enters a 7-digit number. The number is used
 ## Procedural Generation
 Most randomization you'll see in Javascript will use the `Math.random` object. It returns a 'random' value each time it's called. The values are meant to be difficult to predict...that is the closest a deterministic system like a computer can get to 'truly random'. (Yes, I will happily argue this with you in the comments.)
 
-But for Dial-O-Tron, we need an algorithm that produces *seemingly* unpredictable results that are in truth completely consistent for a given set of inputs. For example, `SpecialRand(123)` returns output 'K' every time, and yet it remains infeasible to predict in advance what `SpecialRand(456)` will produce. 
+But for Dial-O-Tron, we need an algorithm that produces *seemingly* unpredictable results that in truth are completely consistent for any given inputs. For example, `SpecialRand(123)` returns output 'K' every time, yet it remains infeasible to predict in advance what `SpecialRand(456)` will produce. 
 
 In a nutshell, this is Procedural Generation on-the-cheap.
 
-This can be accomplished with many different algorithms, such as the Perlin Noise I use in the unpublicized 'Entroscope' app for Android. In that, geolocation and clock data are inputs to generate game data on-the-fly, according to the results of a Perlin Noise function.
+This can be accomplished with many different algorithms, such as the Perlin Noise I use my unpublicized 'Entroscope' app for Android. In that, geolocation and clock data are inputs to generate game data on-the-fly, according to the results of a Perlin Noise function.
 
-In Dial-O-Tron, the entire mathematical domain of possible inputs is much smaller: Only 'all possible phone numbers', so 10^7 (10,000,000). Maybe that seems alot, but for an entire universe it's tiny. 
+In Dial-O-Tron, the entire mathematical domain of possible inputs is much smaller: Only 'all possible local phone numbers', so 10^7 (10,000,000). Maybe that seems alot, but for an entire universe it's tiny. 
 
-A popular, computationally cheap algorithm will suffice as a "seedable" Random Number Generator. For each NPC (or other procedurally-generated entity), the 'phone number' is used as the seed. Instantiated with that value at runtime, it produces the necessary 'illusion of consistent randomness'.
+A popular, computationally cheap algorithm will suffice as a "seedable" Random Number Generator. (link to the function)
+
+For each NPC (or other procedurally-generated entity), the 'phone number' is used as the seed. Instantiated with that value at runtime, this produces the necessary 'illusion of consistent randomness'.
 
 (to do: add code snippets and links to relevant sections)
 
 ## Tokenization
-Tokens are in everything
+Tokens are in everything. Omg there are so many tokens now.
 
 ## Self-Modifying Runtime Code 
-So much self-tweaking code 
+So much self-modifying code I'm no longer sure if I'm writing this, or it's writing itself.
 
 # Gameplay Engine
-How game state and player workflow is handled
+How game state and player workflow is handled. 
 
 ## DOT Object
 A class representing the user's fictional device
