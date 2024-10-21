@@ -31,7 +31,7 @@ This, in a nutshell, is Procedural Generation on-the-cheap.
 
 This could be accomplished with many algorithms, such as the Perlin Noise I use my unpublicized 'Entroscope' app for Android. In that, geolocation and clock data are inputs to generate game data on-the-fly, according to the results of a Perlin Noise function.
 
-In Dial-O-Tron, the entire mathematical domain of possible inputs is much smaller: Only 'all possible local phone numbers', so 10^7 (10,000,000). Maybe that seems alot, but for an entire universe it's tiny. 
+In Dial-O-Tron, the entire mathematical domain of possible inputs is much smaller: Only 'possible local phone numbers', so 10^7 (10,000,000). Maybe that seems alot, but for an entire universe it's tiny. 
 
 A popular, computationally cheap algorithm will suffice as a "seedable" Random Number Generator. (link to the function)
 
