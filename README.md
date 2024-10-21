@@ -45,7 +45,7 @@ And they're sometimes used as a workaround or 'trick' in response scripts.
 
 ## Inline Commands
 How inline commands {in brackets} are used throughout response scripts.
-Inline commands and use, change, or even create or modify tokens.
+Inline commands use, change, or even create or delete tokens on-the-fly.
 How the flow of response script entries is used to execute inline code 
 in order when necessary. For example, the 'greeting' response may include 
 code that sets variables that code in the 'middle' or 'goodbye' responses 
