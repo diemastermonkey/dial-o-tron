@@ -1,11 +1,11 @@
 # Dial-O-Tron
 A nostalgic, procedurally-generated hacker adventure played 7 digits at a time.
 
-Try it at [my CodePen!](https://codepen.io/Unhacker/full/VwowxWL)
+Try it at [my CodePen](https://codepen.io/Unhacker/full/VwowxWL)!
 
 Disclaimer: I know *nothing* about game design; I made this because I enjoy writing weird code.
 
-This repository mostly exists to document how it works, before I forget. Code here may lag behind the [CodePen](https://codepen.io/Unhacker/full/VwowxWL) instance.
+This repository exists to document how it works before I forget. Code here may lag behind [CodePen](https://codepen.io/Unhacker/full/VwowxWL).
 
 # Excerpt from 'Projects' entry: 
 
