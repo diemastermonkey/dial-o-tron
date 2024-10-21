@@ -1,5 +1,5 @@
 # Dial-O-Tron
-A nostalgic, hacker-themed procedurally-generated DTMF adventure played in 7 digit increments.
+A nostalgic, hacker-themed procedurally-generated DTMF adventure in 7 digit increments.
 
 [Try it at my CodePen](https://codepen.io/Unhacker/full/VwowxWL)!
 
