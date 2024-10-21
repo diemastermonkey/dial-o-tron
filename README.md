@@ -21,11 +21,13 @@ How gameplay works. Theoretically.
 Everything starts when a user enters a 7-digit number. The number is used 
 
 ## Procedural Generation
-Most randomization you'll see in Javascript will use the `Math.random` object. It returns a 'random' value each time it's called. The values are meant to be difficult to predict...that is the closest a deterministic system like a computer can get to 'truly random'. (Yes, I will happily argue this with you in the comments.)
+Most randomization you'll see in Javascript will use `Math.random`, which returns a 'random' value each time it's called. 
 
-But for Dial-O-Tron, we need an algorithm that produces *seemingly* unpredictable results that in truth are completely consistent for any given inputs. For example, `SpecialRand(123)` returns output 'K' every time, yet it remains infeasible to predict in advance what `SpecialRand(456)` will produce. 
+These values should be difficult to predict; That is the closest any deterministic system like a computer can get to 'truly random'. Yes, I will happily argue this with you in the comments.
 
-In a nutshell, this is Procedural Generation on-the-cheap.
+But for Dial-O-Tron, we need an algorithm that produces *seemingly* random results that actually are completely consistent for a set of given inputs. For example, `SpecialRand(123)` would return output 'K' every time, yet it would remain difficult to predict in advance what `SpecialRand(456)` would return.
+
+This, in a nutshell, is Procedural Generation on-the-cheap.
 
 This can be accomplished with many different algorithms, such as the Perlin Noise I use my unpublicized 'Entroscope' app for Android. In that, geolocation and clock data are inputs to generate game data on-the-fly, according to the results of a Perlin Noise function.
 
