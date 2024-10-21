@@ -5,7 +5,7 @@ Try it at [my CodePen!](https://codepen.io/Unhacker/full/VwowxWL)
 
 Disclaimer: I know *nothing* about game design; I made this because I enjoy writing weird code.
 
-This repository mostly exists to document how it works, before I forget.
+This repository mostly exists to document how it works, before I forget. Code here may lag behind the [CodePen](https://codepen.io/Unhacker/full/VwowxWL) instance.
 
 # Excerpt from 'Projects' entry: 
 
