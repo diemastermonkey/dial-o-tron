@@ -1,0 +1,30 @@
+# Dial-O-Tron Assets: Deathtaunts 
+# Shown Base64-encoded at endgame, stored encoded in aGlobalTokens['DEATHTAUNTS']
+# It's shown as 'Citation #', they're supposed to go decode it. :P
+# Here is the unencoded list, or it's hard to remember what's in there 
+# Yes I realize I could've stored them clear and encoded in-game but 
+# we're talking about hackers here. Encoding them is the least I can do. ;)
+
+# Plaintext
+GAME OVER!
+SO IT GOES
+NOTHING PERSONAL
+YOU’RE DONE BRUH
+END OF LINE
+INTO DARKNESS
+IT’S OVER, MAN!
+RIP CCS 1967-2018
+NICE TRY THO
+SEE YA!
+JUST BUSINESS
+YA MISSED!
+GOTCHA
+ANY LAST WORDS?
+THANKS FOR PLAYING! - GAD
+  
+# Encoded (same order)
+['R0FNRSBPVkVSIQo=', 'U08gSVQgR09FUwo=', 'Tk9USElORyBQRVJTT05BTAo=', 
+'WU9V4oCZUkUgRE9ORSBCUlVICg==', 'RU5EIE9GIExJTkUK', 'SU5UTyBEQVJLTkVTUwo=',
+'SVTigJlTIE9WRVIsIE1BTiEK', 'UklQIENDUyAxOTY3LTIwMTgK', 'TklDRSBUUlkgVEhPCg==', 
+'U0VFIFlBIQo=', 'SlVTVCBCVVNJTkVTUwo=', 'WUEgTUlTU0VEIQo=', 'R09UQ0hBCg==', 
+'QU5ZIExBU1QgV09SRFM/Cg==', 'VEhBTktTIEZPUiBQTEFZSU5HISAtIEdBRAo=']
