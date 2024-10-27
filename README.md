@@ -14,8 +14,10 @@ It's like [Doors](https://github.com/diemastermonkey/doors), but instead of a ma
 Ultimately, I will wrap this and get it onto Android for the Play store.
 
 # Gameplay Synopsis
-How gameplay works. Theoretically. 
-If you're really more curious about the game aspect, check out 'Lore', below.
+How gameplay works. Theoretically. If you're really more curious about the game aspect, check out 'Lore', below.
+
+It all starts when the player dials a 7-digit phone number - say, 555-1212. 
+
 
 # Concepts 
 (Key concepts needed to understand wtf is going on.)
@@ -37,6 +39,13 @@ In Dial-O-Tron, the entire mathematical domain of possible inputs is much smalle
 A popular, computationally cheap algorithm will suffice as a "seedable" Random Number Generator. (link to the function)
 
 For each NPC (or other procedurally-generated entity), the 'phone number' is used as the seed. Instantiated with that seed at runtime, our custom 'non-random random number generator' produces the necessary illusion of 'consistent diversity'.
+
+NPCs are generated on-the-fly, with properties like:
+
+* Existence: Does the NPC even exist?
+* Schedule: Are they asleep, or closed for business?
+* Scripts: Text responses and/or functional code selected from a global pool
+* Runtime: NPCs can generate/add/modify properties
 
 (to do: add code snippets and links to relevant sections)
 
