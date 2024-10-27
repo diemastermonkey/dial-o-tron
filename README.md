@@ -56,10 +56,15 @@ Error:
 Caller ID blocked!
 ```
 
-Other numbers yield obscure voicemail or control systems, old-school BBS, mysterious operatives, random strangers, and more. 
+Players explore the game world 7 digits at a time to discover:
+* Obscure voicemail and control systems
+* Old-school BBSes
+* Mysterious operatives and puzzles
+* Random strangers and more
+
 Each number gives the impression of a distinct entity with a memory and interaction.
 
-Players eventually learn how to hack other systems and their own device to uncover the story, and ultimately retake the network for users.
+Players learn to hack other systems and their own device to uncover the story, and ultimately retake the network for users.
 
 # Concepts 
 (Key concepts needed to understand wtf is going on.)
