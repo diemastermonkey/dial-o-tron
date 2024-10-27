@@ -114,7 +114,7 @@ In some cases the choice might be completely random (think `<MOOD>`), but in mos
 
 The NPC's seeded 'RNG' will generate a number (say, 0 to 63), which will become the array index into the `NAME` array. To simplify this, the random index will be modulo'd with the length of the `NAME` array, normalizing it. This is appropriate for something like `NAME`, which needs to stay the same for every dialed number. A `MOOD`, in constrast, could and should change.
 
-*Note*: In some cases, these procgen values are 'peeled off' the RNG as-needed. This works in a scenario where these determinations are made in the same order each time, and each entity is 'one-off' - it doesn't need to repeat its outputs. In situations where choices are made in varying or unpredictable order, the RNG is re-seeded with the NPC's seed + asc(token) being determined. This ensures that every request to 'determine the name' will yield the same name each time. See the 'DND Attributes' code in *Doors* for an example of this.
+*Note*: In some cases, these procgen values are 'peeled off' the RNG as-needed. This works in a scenario where these determinations are made in the same order each time, and each entity is 'one-off' - it doesn't need to repeat its outputs. In situations where choices are made in varying or unpredictable order, the RNG is re-seeded with the NPC's seed + asc(token) being determined. This ensures that every request to 'determine the name' will yield the same name each time. See the 'DND Attributes' code in [Doors](https://github.com/diemastermonkey/doors) for an example of this.
 
 ## Self-Modifying Runtime Code 
 So much self-modifying code I'm no longer sure if I'm writing this, or it's writing itself.
