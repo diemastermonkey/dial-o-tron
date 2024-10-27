@@ -16,7 +16,7 @@ Ultimately, I will wrap this and get it onto Android for the Play store.
 # Gameplay Synopsis
 How gameplay works. Theoretically. If you're really more curious about the game aspect, check out 'Lore', below.
 
-It all starts when the player dials a 7-digit phone number - say, 555-1212. The device informs them 
+It all starts when the player dials any random 7-digit phone number. Perhaps the first reports `no answer`. Another only beeps once and hangs-up. The third - 566-1337 - produces this response:
 ```
 Dial-O-Tron 0.31
 566-1337
@@ -29,6 +29,31 @@ I can hear you breathing, you know.
 Goodbye!
 
 [disconnected]
+```
+They dial 566-1337 again...
+```
+Dial-O-Tron 0.31
+566-1337
+
+[ringing]
+[connected]
+
+You, again??
+Where are your parents?!
+Goodbye!
+
+[disconnected]
+```
+
+After a few more redials, they recieve 
+```
+Dial-O-Tron 0.31
+566-1337
+
+[loud beep]
+
+Error:
+Caller ID blocked!
 ```
 
 # Concepts 
