@@ -96,9 +96,11 @@ NPCs are generated on-the-fly, with properties like:
 (to do: add code snippets and links to relevant sections)
 
 ## Tokenization
-Tokens are in everything. Omg there are so many tokens now.
+(Tokens are in everything. Omg there are so many tokens now.)
 
-Tokens are used to expand the variability of procedurally generated content. This usually takes the form of an array of options for a general concept. In response scripts and elsewhere, `<TOKEN>` is then replaced with one of the items from the matching array. 
+Tokens are used to expand the variability of procedurally generated content.  In some cases, they are used directly by scripts or code (`something=aTokens['TOOLONG']`).
+
+But usually, they stand-in as an array of options for any mutable data point. In response scripts (and elsewhere), `<TOKEN>` is then replaced with an items from the appropriate array. 
 
 Example (not how I'm doing it):
 ```
@@ -110,7 +112,9 @@ On rendering, `<NAME>` gets replaced with one of GARY, SHEN, OR MOWBIE.
 
 In some cases the choice might be completely random (think `<MOOD>`), but in most it will be procedurally-generated.
 
-The NPC's seeded 'RNG' will generate a number (say, 0 to 63), which will become the array index into the `NAME` array. To simplify this, the random index will be modulo'd with the length of the `NAME` array, normalizing it.
+The NPC's seeded 'RNG' will generate a number (say, 0 to 63), which will become the array index into the `NAME` array. To simplify this, the random index will be modulo'd with the length of the `NAME` array, normalizing it. This is appropriate for something like `NAME`, which needs to stay the same for every dialed number. A `MOOD`, in constrast, could and should change.
+
+*Note*: In some cases, these procgen values are 'peeled off' the RNG as-needed. This works in a scenario where these determinations are made in the same order each time, and each entity is 'one-off' - it doesn't need to repeat its outputs. In situations where choices are made in varying or unpredictable order, the RNG is re-seeded with the NPC's seed + asc(token) being determined. This ensures that every request to 'determine the name' will yield the same name each time. See the 'DND Attributes' code in *Doors* for an example of this.
 
 ## Self-Modifying Runtime Code 
 So much self-modifying code I'm no longer sure if I'm writing this, or it's writing itself.
