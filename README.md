@@ -56,6 +56,11 @@ Error:
 Caller ID blocked!
 ```
 
+Other numbers yield obscure voicemail or control systems, old-school BBS, mysterious operatives, random strangers, and more. 
+Each number gives the impression of a distinct entity with a memory and interaction.
+
+Players eventually learn how to hack other systems and their own device to uncover the story, and ultimately retake the network for users.
+
 # Concepts 
 (Key concepts needed to understand wtf is going on.)
 Everything starts when a user enters a 7-digit number. The number is used 
