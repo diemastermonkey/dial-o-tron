@@ -16,7 +16,21 @@ Ultimately, I will wrap this and get it onto Android for the Play store.
 # Gameplay Synopsis
 How gameplay works. Theoretically. If you're really more curious about the game aspect, check out 'Lore', below.
 
-It all starts when the player dials a 7-digit phone number - say, 555-1212. 
+It all starts when the player dials a 7-digit phone number - say, 555-1212. The device informs them 
+`
+Dial-O-Tron 0.31
+
+566-1337
+
+[ringing]
+[connected]
+
+You, again??
+I can hear you breathing, you know.
+Goodbye!
+
+[disconnected]
+`
 
 
 # Concepts 
