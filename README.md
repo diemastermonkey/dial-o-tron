@@ -56,7 +56,7 @@ Error:
 Caller ID blocked!
 ```
 
-Players explore the game world 7 digits at a time to discover:
+Players explore the game world 7 digits at a time to discover and interact with:
 * Obscure voicemail and control systems
 * Old-school BBSes
 * Mysterious operatives and puzzles
@@ -64,7 +64,7 @@ Players explore the game world 7 digits at a time to discover:
 
 Each number gives the impression of a distinct entity with a memory and interaction.
 
-Players learn to hack other systems and their own device to uncover the story, and ultimately retake the network for users.
+They learn to hack other systems and their own device to uncover the story, and ultimately retake the network for users.
 
 # Concepts 
 (Key concepts needed to understand wtf is going on.)
@@ -97,6 +97,20 @@ NPCs are generated on-the-fly, with properties like:
 
 ## Tokenization
 Tokens are in everything. Omg there are so many tokens now.
+
+Tokens are used to expand the variability of procedurally generated content. This usually takes the form of an array of options for a general concept. In response scripts and elsewhere, `<TOKEN>` is then replaced with one of the items from the matching array. 
+
+Example (not how I'm doing it):
+```
+aTokens['NAME'] = ['GARY', 'SHEN', 'MOWBIE'];
+(...)
+sResponseScript = 'Hello, this is <NAME>';
+```
+On rendering, `<NAME>` gets replaced with one of GARY, SHEN, OR MOWBIE. 
+
+In some cases the choice might be completely random (think `<MOOD>`), but in most it will be procedurally-generated.
+
+The NPC's seeded 'RNG' will generate a number (say, 0 to 63), which will become the array index into the `NAME` array. To simplify this, the random index will be modulo'd with the length of the `NAME` array, normalizing it.
 
 ## Self-Modifying Runtime Code 
 So much self-modifying code I'm no longer sure if I'm writing this, or it's writing itself.
