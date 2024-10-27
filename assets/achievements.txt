@@ -1,0 +1,11 @@
+		// Achievements: A dictionary of simple true/false. DOT should manage these.
+		var aAchievements = Object.fromEntries([	// Prettier way to set all false
+			// Finding things
+			'NIL', 'SIM', 'BBS', 'Bot',	'Spammed', 'Stoners', 'Breather',
+			// Key game milestones			
+			'Heat', 'Cool', 'Locked', 'Unlocked', 'Warrant', 'Pardon', 'Bricked',
+			// Hacker milestones. Release hack, get DT invite to DEFCON w/Black Badge!
+			'Lurker', 'Poster', 'Coder', 'Hacker', 'Author', 'Black Badge', 'Meet pzm',
+			// Normie (?) milestones 
+			'Mod', 'Redial', 'Help Sarah', 'Help George', 'Save a Life', 'Order Pizza'
+		].map(key => [key, false]));	
