@@ -68,7 +68,6 @@ Players learn to hack other systems and their own device to uncover the story, a
 
 # Concepts 
 (Key concepts needed to understand wtf is going on.)
-Everything starts when a user enters a 7-digit number. The number is used 
 
 ## Procedural Generation
 Most randomization you'll see in Javascript will use `Math.random`, which returns a 'random' value each time it's called. 
